@@ -17,7 +17,8 @@ import com.oneliang.frame.jdbc.SqlInjectUtil;
 import com.oneliang.frame.jdbc.SqlUtil;
 import com.oneliang.util.common.ObjectUtil;
 import com.oneliang.util.common.StringUtil;
-import com.oneliang.util.log.Logger;
+import com.oneliang.util.logging.Logger;
+import com.oneliang.util.logging.LoggerManager;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,7 +27,7 @@ public class SqliteQueryImpl implements Query {
 
     protected SQLiteDatabase sqliteDatabase=null;
 
-    private static Logger logger=Logger.getLogger(SqliteQueryImpl.class);
+    private static Logger logger=LoggerManager.getLogger(SqliteQueryImpl.class);
 
     private static final SqlProcessor SQLITE_SQL_PROCESSOR=new SqliteSqlProcessor();
     
@@ -684,7 +685,7 @@ public class SqliteQueryImpl implements Query {
 	 */
 	public void executeBySql(String sql, String[] parameters) throws QueryException {
 	    sql=DatabaseMappingUtil.parseSql(sql);
-	    logger.log(sql);
+	    logger.info(sql);
 	    if(parameters==null||parameters.length==0){
 	        this.sqliteDatabase.execSQL(sql);
 	    }else{
@@ -711,7 +712,7 @@ public class SqliteQueryImpl implements Query {
      */
     public Cursor executeQueryBySql(String sql, String[] parameters) throws QueryException {
         sql=DatabaseMappingUtil.parseSql(sql);
-        logger.log(sql);
+        logger.info(sql);
         return this.sqliteDatabase.rawQuery(sql, parameters);
     }
 
@@ -831,7 +832,7 @@ public class SqliteQueryImpl implements Query {
 					break;
 				}
 				sql=DatabaseMappingUtil.parseSql(sql);
-				logger.log(sql);
+				logger.info(sql);
 				this.sqliteDatabase.beginTransaction();
 				for(T object:collection){
 					if(fieldNameList!=null){
