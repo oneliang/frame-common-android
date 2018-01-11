@@ -38,6 +38,8 @@ public class TableTypeBlock extends ComplexBlock {
 
 	private static final int KNOWN_CONFIG_BYTES = 52;
 	private static final short ENTRY_FLAG_COMPLEX = 0x0001;
+	private static final short ENTRY_FLAG_PUBLIC = 0x0002;
+	private static final short ENTRY_FLAG_WEAK = 0x0004;
 
 	//reference
 	private ArscBlock arscBlock=null;
@@ -319,7 +321,7 @@ public class TableTypeBlock extends ComplexBlock {
 		/* zero */leDataInputStream.readByte();
 		byte type = leDataInputStream.readByte();
 		int data = leDataInputStream.readInt();
-		Logger.log("original.type:"+type+",data:"+data);
+		Logger.log("original.type:"+type+",data index:"+data);
 		String value=null;
 		if(type == TypedValue.TYPE_STRING){
 			value=this.arscBlock.globalStringPoolBlock.getHTML(data);
