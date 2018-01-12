@@ -304,7 +304,7 @@ public class TableTypeBlock extends ComplexBlock {
 		int specNameId = leDataInputStream.readInt();
 		String resourceType=this.tablePackageBlock.resourceTypeStringPoolBlock.getString(this.tableType.resourceTypeId-1);
 		String resourceName=this.tablePackageBlock.resourceKeywordStringPoolBlock.getString(specNameId);
-		Logger.log("entry size:"+size+",flag:"+StringUtil.byteArrayToHexString(MathUtil.shortToByteArray(flag))+",spec name id:"+StringUtil.byteArrayToHexString(MathUtil.intToByteArray(specNameId))+",spec name:"+this.tablePackageBlock.resourceKeywordStringPoolBlock.getString(specNameId)+",res id:0x"+StringUtil.byteArrayToHexString(MathUtil.intToByteArray(resId)));
+		Logger.log("entry size:"+size+",flag:"+StringUtil.byteArrayToHexString(MathUtil.shortToByteArray(flag))+",spec name id(index):"+StringUtil.byteArrayToHexString(MathUtil.intToByteArray(specNameId))+",spec name:"+this.tablePackageBlock.resourceKeywordStringPoolBlock.getString(specNameId)+",res id:0x"+StringUtil.byteArrayToHexString(MathUtil.intToByteArray(resId)));
 		String[] values=null;
 		if((flag & ENTRY_FLAG_COMPLEX) == 0 ){
 			String value=readValue(leDataInputStream);
