@@ -17,11 +17,21 @@ import com.oneliang.frame.section.Section;
 import com.oneliang.frame.section.SectionDiff;
 import com.oneliang.frame.section.SectionDiffData;
 import com.oneliang.frame.section.SectionPosition;
+import com.oneliang.util.bsdiff.BSDiff;
 import com.oneliang.util.common.Generator;
+import com.oneliang.util.common.MathUtil;
 import com.oneliang.util.common.StringUtil;
 import com.oneliang.util.file.FileUtil;
 
 public class TestArscDiff {
+
+    private static void testBsDiff() throws Exception {
+        final String fileDirectory = "/D:/resourceArsc";
+        File oldFile = new File(fileDirectory + "/resources#15227.arsc");
+        File newFile = new File(fileDirectory + "/resources#15229.arsc");
+        File diffFile = new File(fileDirectory + "/resources_bsdiff.arsc");
+        BSDiff.bsdiff(oldFile, newFile, diffFile);
+    }
 
     public static List<Section> arscToSectionList(String arscFullFilename) throws Exception {
         List<Section> sectionList = new ArrayList<Section>();
@@ -55,10 +65,20 @@ public class TestArscDiff {
     }
 
     public static void main(String[] args) throws Exception {
+        // testBsDiff();
+        // List<SectionPosition> sectionPositionMoveList = new
+        // ArrayList<SectionPosition>();
+        // sectionPositionMoveList.add(new SectionPosition(1, 1));
+        // sectionPositionMoveList.add(new SectionPosition(-1, 2));
+        // sectionPositionMoveList.add(new SectionPosition(5, 3));
+        // sectionPositionMoveList.add(new SectionPosition(6, 4));
+        // SectionDiffData.mergeSectionPosition(sectionPositionMoveList);
+        // System.exit(0);
         final String fileDirectory = "/D:/resourceArsc";
-        final String diffFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources.diff";
-        String oldArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources#15196.arsc";
-        String newArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources#15197.arsc";
+        final String diffFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources_diff.arsc";
+        String oldArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources#15227.arsc";
+        String newArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources#15229.arsc";
+        String afterPatchArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources_patch.arsc";
         System.setOut(new PrintStream(fileDirectory + Constant.Symbol.SLASH_LEFT + "log_resource_diff.txt"));
         SectionDiff sectionDiff = new SectionDiff();
         long begin = System.currentTimeMillis();
@@ -66,21 +86,40 @@ public class TestArscDiff {
         List<Section> newSectionList = arscToSectionList(newArscFile);
         System.out.println("after parse:" + (System.currentTimeMillis() - begin));
         begin = System.currentTimeMillis();
-        List<SectionPosition> sectionPositionMoveList = new ArrayList<SectionPosition>();
-        // sectionPositionMoveList.add(new SectionPosition(1,1));
-        // sectionPositionMoveList.add(new SectionPosition(2,2));
-        // sectionPositionMoveList.add(new SectionPosition(3,3));
-        // sectionDiff.mergeSectionPositionMoveList(sectionPositionMoveList);
         SectionDiffData sectionDiffData = sectionDiff.diff(oldSectionList, newSectionList);
         System.out.println("after diff:" + (System.currentTimeMillis() - begin));
         FileUtil.writeFile(diffFile, sectionDiffData.toByteArray());
+
         System.out.println("diff data length:" + sectionDiffData.toByteArray().length);
         begin = System.currentTimeMillis();
-        sectionDiff.patch(oldSectionList, sectionDiffData.sectionPositionMoveList, sectionDiffData.sectionPositionIncreaseList);
+        System.out.println("move size:" + sectionDiffData.sectionPositionMoveList.size());
+        System.out.println("increase size:" + sectionDiffData.sectionPositionIncreaseList.size());
+        System.out.println("move byte size:" + sectionDiffData.sectionPositionMoveList.size() * 4);
+        System.out.println("----------start move----------");
+        int increaseByteSize = 0;
+        for (SectionPosition sectionPosition : sectionDiffData.sectionPositionMoveList) {
+            System.out.println(String.format("fetch from (new<-old)(index:%s <- %s)", sectionPosition.getToIndex(), sectionPosition.getFromIndex()));
+        }
+        for (SectionPosition sectionPosition : sectionDiffData.sectionPositionIncreaseList) {
+            byte[] byteArray = sectionPosition.getByteArray();
+            // if (byteArray == null) {
+            // System.out.println("byte array is null:" +
+            // sectionPosition.getToIndex());
+            // } else {
+            increaseByteSize += sectionPosition.getByteArray().length;
+            // }
+        }
+        System.out.println("increase byte size:" + increaseByteSize);
+        System.out.println("----------end move----------");
+
+        SectionDiffData.mergeSectionPosition(sectionDiffData.sectionPositionMoveList);
+
+        sectionDiffData = SectionDiffData.parseFrom(new FileInputStream(diffFile));
+        byte[] byteArray = sectionDiff.patch(oldSectionList, sectionDiffData.sectionPositionMoveList, sectionDiffData.sectionPositionIncreaseList);
+        FileUtil.writeFile(afterPatchArscFile, byteArray);
         System.out.println("after patch:" + (System.currentTimeMillis() - begin));
-        // sectionDiff.printSectionList(oldSectionList);
-        System.out.println("length:" + FileUtil.readFile(oldArscFile).length + "oldMD5:" + Generator.MD5File(oldArscFile));
-        // sectionDiff.printSectionList(newSectionList);
-        System.out.println("length:" + FileUtil.readFile(newArscFile).length + "newMD5:" + Generator.MD5File(newArscFile));
+        System.out.println("length:" + FileUtil.readFile(oldArscFile).length + ",oldMD5:" + Generator.MD5File(oldArscFile));
+        System.out.println("length:" + FileUtil.readFile(newArscFile).length + ",newMD5:" + Generator.MD5File(newArscFile));
+        System.out.println("length:" + FileUtil.readFile(afterPatchArscFile).length + ",afterPatchMD5:" + Generator.MD5File(afterPatchArscFile));
     }
 }
