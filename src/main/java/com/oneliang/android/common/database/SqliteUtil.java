@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.exception.MappingNotFoundException;
 import com.oneliang.frame.jdbc.MappingBean;
 import com.oneliang.util.common.ObjectUtil;
@@ -46,8 +46,8 @@ public final class SqliteUtil {
 					for (Method method : methods) {
 						String methodName = method.getName();
 						String fieldName = null;
-						if (methodName.startsWith(Constant.Method.PREFIX_SET)) {
-							fieldName = ObjectUtil.methodNameToFieldName(Constant.Method.PREFIX_SET, methodName);
+						if (methodName.startsWith(Constants.Method.PREFIX_SET)) {
+							fieldName = ObjectUtil.methodNameToFieldName(Constants.Method.PREFIX_SET, methodName);
 						}
 						if (fieldName != null) {
 							columnName = mappingBean.getColumn(fieldName);

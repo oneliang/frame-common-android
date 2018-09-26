@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.android.common.context.AndroidConfigurationFactory;
 import com.oneliang.frame.ConfigurationFactory;
 import com.oneliang.frame.bean.Page;
@@ -657,8 +657,8 @@ public class SqliteQueryImpl implements Query {
 		if(condition!=null){
 			sqlConditions.append(condition);
 		}
-		sqlConditions.append(" "+Constant.Database.MySql.PAGINATION+" ");
-		sqlConditions.append(startRow+Constant.Symbol.COMMA+rowsPerPage);
+		sqlConditions.append(" "+Constants.Database.MySql.PAGINATION+" ");
+		sqlConditions.append(startRow+Constants.Symbol.COMMA+rowsPerPage);
 		List<T> list=null;
 		try{
 			list=this.selectObjectList(clazz, selectColumns, table, sqlConditions.toString(), parameters);
@@ -971,15 +971,15 @@ public class SqliteQueryImpl implements Query {
         	String sql=null;
         	if(clazz!=null){
 				MappingBean mappingBean=ConfigurationFactory.findMappingBean(clazz);
-				sql=SqlUtil.selectSql(new String[]{"COUNT(0) AS "+Constant.Database.COLUMN_NAME_TOTAL},table,condition,mappingBean);
+				sql=SqlUtil.selectSql(new String[]{"COUNT(0) AS "+Constants.Database.COLUMN_NAME_TOTAL},table,condition,mappingBean);
 			}else{
-				sql=SqlUtil.selectSql(new String[]{"COUNT(0) AS "+Constant.Database.COLUMN_NAME_TOTAL},table,condition,null);
+				sql=SqlUtil.selectSql(new String[]{"COUNT(0) AS "+Constants.Database.COLUMN_NAME_TOTAL},table,condition,null);
 			}
         	cursor=this.executeQueryBySql(sql,parameters);
         	int rowCount = cursor.getCount();
         	if(rowCount>0){
         		cursor.moveToFirst();
-        		totalRows=cursor.getInt(cursor.getColumnIndex(Constant.Database.COLUMN_NAME_TOTAL));
+        		totalRows=cursor.getInt(cursor.getColumnIndex(Constants.Database.COLUMN_NAME_TOTAL));
         	}
         }catch(Exception e) {
             throw new QueryException(e);

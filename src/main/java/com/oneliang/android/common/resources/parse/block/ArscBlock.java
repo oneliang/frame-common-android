@@ -10,7 +10,7 @@ import java.util.Queue;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.android.common.resources.parse.struct.ResourceEntry;
 import com.oneliang.android.common.resources.parse.struct.Table;
 import com.oneliang.frame.io.CountingInputStream;
@@ -93,7 +93,7 @@ public class ArscBlock extends ComplexBlock {
     }
 
     public void writeRTxt(String outputDirectory) {
-        String outputFullFilename = new File(outputDirectory).getAbsolutePath() + Constant.Symbol.SLASH_LEFT + "R" + Constant.Symbol.DOT + Constant.File.TXT;
+        String outputFullFilename = new File(outputDirectory).getAbsolutePath() + Constants.Symbol.SLASH_LEFT + "R" + Constants.Symbol.DOT + Constants.File.TXT;
         FileUtil.createFile(outputFullFilename);
         PrintWriter writer = null;
         try {
@@ -229,7 +229,7 @@ public class ArscBlock extends ComplexBlock {
         // byteArrayInputStream.read();
         // buffer=new byte[nextStringOffset-stringOffset-3];
         // byteArrayInputStream.read(buffer, 0, buffer.length);
-        // result=new String(buffer,Constant.Encoding.UTF8);
+        // result=new String(buffer,Constants.Encoding.UTF8);
         // }
         // }
         // randomAccessFile.close();

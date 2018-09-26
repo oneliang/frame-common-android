@@ -2,7 +2,7 @@ package com.oneliang.android.common.broadcast;
 
 import android.os.Handler;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.frame.broadcast.Message;
 import com.oneliang.util.logging.Logger;
 import com.oneliang.util.logging.LoggerManager;
@@ -35,7 +35,7 @@ public final class BroadcastManager extends com.oneliang.frame.broadcast.Broadca
                 }
             }
         } catch (Exception e) {
-            logger.error(Constant.Base.EXCEPTION, e);
+            logger.error(Constants.Base.EXCEPTION, e);
             Thread.currentThread().interrupt();
         }
     }

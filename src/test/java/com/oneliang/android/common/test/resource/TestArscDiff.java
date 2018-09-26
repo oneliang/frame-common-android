@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.android.common.resources.parse.block.ArscBlock;
 import com.oneliang.android.common.resources.parse.block.StringPoolBlock;
 import com.oneliang.android.common.resources.parse.block.TablePackageBlock;
@@ -75,11 +75,11 @@ public class TestArscDiff {
         // SectionDiffData.mergeSectionPosition(sectionPositionMoveList);
         // System.exit(0);
         final String fileDirectory = "/D:/resourceArsc";
-        final String diffFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources_diff.arsc";
-        String oldArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources#15227.arsc";
-        String newArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources#15229.arsc";
-        String afterPatchArscFile = fileDirectory + Constant.Symbol.SLASH_LEFT + "resources_patch.arsc";
-        System.setOut(new PrintStream(fileDirectory + Constant.Symbol.SLASH_LEFT + "log_resource_diff.txt"));
+        final String diffFile = fileDirectory + Constants.Symbol.SLASH_LEFT + "resources_diff.arsc";
+        String oldArscFile = fileDirectory + Constants.Symbol.SLASH_LEFT + "resources#15227.arsc";
+        String newArscFile = fileDirectory + Constants.Symbol.SLASH_LEFT + "resources#15229.arsc";
+        String afterPatchArscFile = fileDirectory + Constants.Symbol.SLASH_LEFT + "resources_patch.arsc";
+        System.setOut(new PrintStream(fileDirectory + Constants.Symbol.SLASH_LEFT + "log_resource_diff.txt"));
         SectionDiff sectionDiff = new SectionDiff();
         long begin = System.currentTimeMillis();
         List<Section> oldSectionList = arscToSectionList(oldArscFile);

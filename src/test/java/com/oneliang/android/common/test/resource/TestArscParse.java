@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.android.common.resources.parse.block.ArscBlock;
 import com.oneliang.android.common.resources.parse.block.StringPoolBlock;
 import com.oneliang.frame.io.CountingInputStream;
@@ -18,8 +18,8 @@ public class TestArscParse {
     private void testArscBlock() throws Exception {
         final String fileDirectory = "/D:/resourceArsc";
         final String filename = "resources#15219";
-        System.setOut(new PrintStream(fileDirectory + Constant.Symbol.SLASH_LEFT + "log_" + filename + ".txt"));
-        String file = fileDirectory + Constant.Symbol.SLASH_LEFT + filename + ".arsc";
+        System.setOut(new PrintStream(fileDirectory + Constants.Symbol.SLASH_LEFT + "log_" + filename + ".txt"));
+        String file = fileDirectory + Constants.Symbol.SLASH_LEFT + filename + ".arsc";
         InputStream inputStream = new FileInputStream(file);
         CountingInputStream countingInputStream = new CountingInputStream(inputStream);
         ArscBlock arscBlock = new ArscBlock();
@@ -32,9 +32,9 @@ public class TestArscParse {
         final String oldFilename = "resources#15196";
         final String newFilename = "resources#15198";
         // System.setOut(new PrintStream(fileDirectory +
-        // Constant.Symbol.SLASH_LEFT + "log_" + filename + ".txt"));
-        String oldFullFilename = fileDirectory + Constant.Symbol.SLASH_LEFT + oldFilename + ".arsc";
-        String newFullFilename = fileDirectory + Constant.Symbol.SLASH_LEFT + newFilename + ".arsc";
+        // Constants.Symbol.SLASH_LEFT + "log_" + filename + ".txt"));
+        String oldFullFilename = fileDirectory + Constants.Symbol.SLASH_LEFT + oldFilename + ".arsc";
+        String newFullFilename = fileDirectory + Constants.Symbol.SLASH_LEFT + newFilename + ".arsc";
         InputStream oldInputStream = new FileInputStream(oldFullFilename);
         CountingInputStream oldCountingInputStream = new CountingInputStream(oldInputStream);
         ArscBlock oldArscBlock = new ArscBlock();

@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.android.common.broadcast.BroadcastManager;
 import com.oneliang.frame.broadcast.BroadcastReceiver;
 import com.oneliang.frame.broadcast.Message;
@@ -110,7 +110,7 @@ public abstract class AbstractResourceAsyncHttpDownloader<T extends Object> exte
         File file=new File(saveFile);
         file.createNewFile();
         FileOutputStream fileOutputStream=new FileOutputStream(file);
-        byte[] buffer = new byte[Constant.Capacity.BYTES_PER_KB];
+        byte[] buffer = new byte[Constants.Capacity.BYTES_PER_KB];
         long current=0;
         int length=-1;
         int lastProgress=0;

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.frame.broadcast.BroadcastReceiver;
 import com.oneliang.util.common.Encoder;
 import com.oneliang.util.common.StringUtil;
@@ -68,10 +68,10 @@ public abstract class ResourceAsyncLoader<T extends Object> extends AbstractReso
             String line=null;
             while((line=bufferedReader.readLine())!=null){
                 if(StringUtil.isNotBlank(line)){
-                    int index=line.lastIndexOf(Constant.Symbol.EQUAL);
+                    int index=line.lastIndexOf(Constants.Symbol.EQUAL);
                     if(index>=0){
                         String filename=line.substring(0, index);
-                        long fileLength=Long.parseLong(line.substring(index+Constant.Symbol.EQUAL.length(), line.length()));
+                        long fileLength=Long.parseLong(line.substring(index+Constants.Symbol.EQUAL.length(), line.length()));
                         resourceFinishedMap.put(filename, fileLength);
                     }
                 }
@@ -143,7 +143,7 @@ public abstract class ResourceAsyncLoader<T extends Object> extends AbstractReso
         if(loadResourceType==RESOURCE_LOAD_TYPE_LOCAL){
             tempFullFilename=url;
         }else if(loadResourceType==RESOURCE_LOAD_TYPE_HTTP){//load resource
-            final String filename=Encoder.escape(url,new char[]{Constant.Symbol.DOT_CHAR});
+            final String filename=Encoder.escape(url,new char[]{Constants.Symbol.DOT_CHAR});
             tempFullFilename=this.httpDownloadCachePath+filename;
             File filePath=new File(this.httpDownloadCachePath);
             if (!filePath.exists()) {
@@ -258,7 +258,7 @@ public abstract class ResourceAsyncLoader<T extends Object> extends AbstractReso
             File file=new File(fullFilename);
             long fileLength=file.length();
             this.resourceFinishedMap.put(fullFilename, fileLength);
-            String line=fullFilename+Constant.Symbol.EQUAL+fileLength+StringUtil.CRLF_STRING;
+            String line=fullFilename+Constants.Symbol.EQUAL+fileLength+StringUtil.CRLF_STRING;
             try {
                 OutputStream outputStream=new FileOutputStream(new File(this.httpDownloadCachePath,tempFileName),true);
                 outputStream.write(line.getBytes());

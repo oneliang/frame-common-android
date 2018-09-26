@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.oneliang.Constant;
+import com.oneliang.Constants;
 import com.oneliang.util.file.FileUtil;
 
 import android.content.Context;
@@ -42,7 +42,7 @@ public final class ApkUtil {
 				}
 			}
 		} catch (IOException e) {
-			Log.e(Constant.Base.EXCEPTION,e.getMessage());
+			Log.e(Constants.Base.EXCEPTION,e.getMessage());
 		}
 		return result;
 	}
@@ -69,21 +69,21 @@ public final class ApkUtil {
 		OutputStream output = null;
 		try {
 			output = new FileOutputStream(file);
-			final byte[] buffer = new byte[Constant.Capacity.BYTES_PER_KB];
+			final byte[] buffer = new byte[Constants.Capacity.BYTES_PER_KB];
 			int length=-1;
 			while ((length = inputStream.read(buffer,0,buffer.length)) != -1) {
 				output.write(buffer, 0, length);
 				output.flush();
 			}
 		} catch (Exception e) {
-			Log.e(Constant.Base.EXCEPTION,e.getMessage());
+			Log.e(Constants.Base.EXCEPTION,e.getMessage());
 		} finally {
 			try {
 				output.close();
 				inputStream.close();
 				result=true;
 			} catch (IOException e) {
-				Log.e(Constant.Base.EXCEPTION,e.getMessage());
+				Log.e(Constants.Base.EXCEPTION,e.getMessage());
 			}
 		}
 		return result;
@@ -97,7 +97,7 @@ public final class ApkUtil {
 	private static void installApk(Context context, String apkPath) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.setDataAndType(Uri.fromFile(new File(apkPath)), Constant.Http.ContentType.APPLICATION_ANDROID_PACKAGE);
+		intent.setDataAndType(Uri.fromFile(new File(apkPath)), Constants.Http.ContentType.APPLICATION_ANDROID_PACKAGE);
 		context.startActivity(intent);
 	}
 }
